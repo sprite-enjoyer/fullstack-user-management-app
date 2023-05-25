@@ -1,5 +1,4 @@
 type UserCredentials = { userName: string; password: string; };
-type BlockUserRequestBodyType = { userName: string; blocked: boolean };
 
 export default class RestClient {
   static URL: string = import.meta.env.VITE_BACKEND_URL;
@@ -12,41 +11,55 @@ export default class RestClient {
       headers: { "Content-Type": "application/json", }
     });
 
-    return await response.json();
+    const json = await response.json();
+    console.log(json, 'in RestClient!');
+    return json;
   }
 
   static async login(credentials: UserCredentials) {
-    const response = await fetch(`${RestClient.URL}/login`, {
+    const response = await fetch(`${RestClient.URL}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json", },
       body: JSON.stringify(credentials),
     });
 
-    return await response.json();
+    const json = await response.json();
+    console.log(json, 'in RestClient!');
+    return json;
   }
 
-  static async deleteUser(userName: string) {
-    const response = await fetch(`${RestClient.URL}/delete-user`, {
+  static async getAllUsers() {
+    const response = await fetch(`${RestClient.URL}/users/allUsers`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json", },
+    });
+    const json = await response.json();
+    console.log("message: ", json.message, ' - from RestClient!');
+
+    return json.users;
+  }
+
+  static async deleteManyUsers(users: string[]) {
+    const response = await fetch(`${RestClient.URL}/users/deleteMany`, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json", },
-      body: JSON.stringify({ userName }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ users: users })
     });
 
-    return await response.json();
+    const json = await response.json();
+    console.log(json, "in RestClient!");
+    return json;
   }
 
-  static async blockUser(requestBody: BlockUserRequestBodyType) {
-    const response = await fetch(`${RestClient.URL}/block-user`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", },
-      body: JSON.stringify(requestBody),
+  static async blockManyUsers(users: string[], block: boolean) {
+    const response = await fetch(`${RestClient.URL}/users/deleteMany`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ users: users, block: block })
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message);
-    }
-
-    return await response.json();
+    const json = await response.json();
+    console.log(json, "in RestClient!");
+    return json;
   }
 }

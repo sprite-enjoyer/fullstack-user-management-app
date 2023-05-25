@@ -1,12 +1,23 @@
 import { Router } from "express"
-import { blockUser, deleteUser, login, register, sendJWT } from "./user.controller.js";
+import {
+  blockUsers,
+  deleteUsers,
+  getAllUsers,
+  login,
+  register,
+  sendJWT,
+  shouldUserBeSignedOut
+} from "./user.controller.js";
 
 const userRouter = Router();
 
 userRouter.post("/register", register, sendJWT);
 userRouter.post("/login", login, sendJWT);
-userRouter.delete("/delete", deleteUser);
-userRouter.patch("/block", blockUser);
 
+userRouter.delete("deleteMany", deleteUsers, shouldUserBeSignedOut);
+
+userRouter.patch("blockMany", blockUsers, shouldUserBeSignedOut);
+
+userRouter.get("/allUsers", getAllUsers);
 
 export default userRouter;
