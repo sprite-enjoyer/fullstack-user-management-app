@@ -1,19 +1,6 @@
 import { Flex, Input, Button } from "@chakra-ui/react"
 import { useReducer } from "react";
-
-const registerUser = async (userName: string, password: string) => {
-  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/register`, {
-    method: "POST",
-    body: JSON.stringify({ userName, password }),
-    credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    }
-  });
-
-  const result = await response.json();
-  console.log(result);
-};
+import RestClient from "../misc/RestClient";
 
 type FormState = { userName: string; password: string; repeatPassword: string; }
 type Action = { type: string; payload: string };
@@ -71,7 +58,7 @@ const Register = () => {
           onChange={(e) => dispatch({ type: "setRepeatPassword", payload: e.target.value })}
           placeholder="repeat password"
         />
-        <Button onClick={() => registerUser(formState.userName, formState.password)}>
+        <Button onClick={() => console.log(RestClient.register(formState))}>
           Register
         </Button>
       </Flex>

@@ -1,6 +1,23 @@
 import { Input, Flex, Button } from "@chakra-ui/react";
+import RestClient from "../misc/RestClient";
+import { useReducer } from "react";
+
+type FormActionType = "setUserName" | "setPassword";
+type FormState = { userName: string, password: string };
+type FormAction = { type: FormActionType, payload: string };
+
+const formReducer = (state: FormState, action: FormAction) => {
+  switch (action.type) {
+    case "setUserName": return { ...state, userName: action.payload };
+    case "setPassword": return { ...state, password: action.payload };
+    default: return state
+  }
+}
 
 const LoginPage = () => {
+
+  const [formState, dispatch] = useReducer(formReducer, { userName: "", password: "" });
+
   return (
     <Flex
       w={"100%"}
@@ -25,9 +42,17 @@ const LoginPage = () => {
         gap={"10px"}
         flex={"1 1"}
       >
-        <Input size={"lg"} placeholder="Username" />
-        <Input size={"lg"} placeholder="Password" />
-        <Button>
+        <Input
+          onChange={(e) => dispatch({ type: "setUserName", payload: e.target.value })}
+          size={"lg"}
+          placeholder="Username"
+        />
+        <Input
+          onChange={(e) => dispatch({ type: "setPassword", payload: e.target.value })}
+          size={"lg"}
+          placeholder="Password"
+        />
+        <Button onClick={() => console.log(RestClient.register(formState))}>
           Login
         </Button>
       </Flex>
