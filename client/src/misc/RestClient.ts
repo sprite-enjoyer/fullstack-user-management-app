@@ -5,7 +5,6 @@ export type RestClientStandardResponse = { response: any, success: boolean };
 
 export default class RestClient {
   static URL: string = import.meta.env.VITE_BACKEND_URL;
-
   static async register(credentials: UserCredentials)
     : Promise<{ response: { taken: boolean, message: string }, success: boolean }> {
     const response = await fetch(`${RestClient.URL}/users/register`, {
@@ -50,6 +49,7 @@ export default class RestClient {
     });
 
     const json = await response.json();
+    if (json.signOut) window.location.replace("/login");
     return { response: json, success: response.ok };
   }
 
@@ -63,6 +63,8 @@ export default class RestClient {
     });
 
     const json = await response.json();
+    if (json.signOut) window.location.replace("/login");
+
     return { response: json, success: response.ok };
   }
 
