@@ -9,7 +9,7 @@ dotenv.config();
 const corsOptions = {
   origin: ["http://localhost:5173", "https://user-management-website008.netlify.app"],
   methods: ["GET", "POST", "PATCH", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "Set-Cookie"],
   credentials: true,
 };
 
