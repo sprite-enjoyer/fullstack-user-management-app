@@ -18,12 +18,20 @@ const TableHead = ({ dispatchUsers }: TableHeadProps) => {
     <Thead>
       <Tr>
         <Th>
-          <Button onClick={() => dispatchUsers({ type: TableActions.block, payload: [] })} >
+          <Button
+            bgColor={"red.500"}
+            color={"black"}
+            onClick={() => dispatchUsers({ type: TableActions.block, payload: [] })}
+          >
             Block
           </Button>
         </Th>
         <Th>
-          <Button onClick={() => dispatchUsers({ type: TableActions.unblock, payload: [] })}>
+          <Button
+            bgColor={"whatsapp.500"}
+            color={"black"}
+            onClick={() => dispatchUsers({ type: TableActions.unblock, payload: [] })}
+          >
             Unblock
           </Button>
         </Th>
@@ -36,25 +44,14 @@ const TableHead = ({ dispatchUsers }: TableHeadProps) => {
       <Tr>
         <Th>
           <Checkbox
-            h="35px"
-            w="35px"
-            fontSize={"28px"}
-            bgColor={"#00a65092"}
-            textColor={"white"}
+            size={"lg"}
+            colorScheme={"whatsapp"}
             isChecked={selected}
             onChange={handleCheckboxToggle}
           />
         </Th>
-        <Th >
-          <Text fontStyle={"normal"} fontSize={"2xl"}>
-            Name
-          </Text>
-        </Th>
-        <Th>
-          <Text fontStyle={"normal"} fontSize={"2xl"} >
-            Blocked
-          </Text>
-        </Th>
+        <Th ><Text fontSize={"2xl"} fontWeight={"semibold"}>Name</Text></Th>
+        <Th><Text fontWeight={"semibold"} fontSize={"2xl"}>Blocked</Text></Th>
       </Tr>
     </Thead>
   );

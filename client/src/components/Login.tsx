@@ -1,7 +1,7 @@
-import { Input, Flex, Button } from "@chakra-ui/react";
+import { Input, Flex, Button, Spacer, Box } from "@chakra-ui/react";
 import RestClient from "../misc/RestClient";
 import { useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 type FormActionType = "setUserName" | "setPassword";
 type FormState = { userName: string, password: string };
@@ -26,41 +26,62 @@ const LoginPage = () => {
 
   return (
     <Flex
-      w={"100%"}
-      height={"100%"}
+      w={"100vw"}
+      height={"100vh"}
       position={"absolute"}
       top={"0"}
       left={"0"}
       margin={"0"}
       padding={"0"}
       justify={"center"}
+      bgColor={"gray.400"}
     >
       <Flex
         marginTop={"10%"}
         minWidth={"400px"}
-        minHeight={"300px"}
+        minHeight={"400px"}
         maxWidth={"35%"}
         maxHeight={"400px"}
-        border={"2px solid plum"}
         flexDirection={"column"}
         justify={"center"}
         align={"center"}
         gap={"10px"}
         flex={"1 1"}
+        bgColor={"whiteAlpha.900"}
+        boxShadow={"2xl"}
+        borderRadius={"10px"}
+        position={"relative"}
       >
         <Input
           onChange={(e) => dispatch({ type: "setUserName", payload: e.target.value })}
           size={"lg"}
+          w={"50%"}
           placeholder="Username"
+          type={"text"}
+          colorScheme="whatsapp"
         />
         <Input
           onChange={(e) => dispatch({ type: "setPassword", payload: e.target.value })}
           size={"lg"}
+          w={"50%"}
           placeholder="Password"
+          type={"password"}
+          colorScheme="whatsapp"
+
         />
-        <Button onClick={handleButtonClick}>
+        <Button
+          colorScheme="whatsapp"
+          onClick={handleButtonClick}
+        >
           Login
         </Button>
+        <Box position={"absolute"} bottom={"10%"}  >
+          <Link to={"/register"}>
+            <Button colorScheme="whatsapp" >
+              Aren't a user? Register!
+            </Button>
+          </Link>
+        </Box>
       </Flex>
     </Flex>
   );

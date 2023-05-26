@@ -1,4 +1,4 @@
-import { Checkbox, Th, Tr } from "@chakra-ui/react"
+import { Checkbox, Th, Tr, Text } from "@chakra-ui/react";
 import { TableActions, UsersReducerAction } from "../misc/usersReducer";
 
 export interface UserRowProps {
@@ -19,19 +19,16 @@ const UserRow = ({ userName, blocked, selected, dispatchUsers }: UserRowProps) =
     <Tr>
       <Th>
         <Checkbox
-          h="20px"
-          w="20px"
-          bgColor={"#00a65092"}
-          textColor={"white"}
           isChecked={selected}
+          colorScheme={"whatsapp"}
           onChange={handleCheckboxToggle}
         />
       </Th>
       <Th>
-        {userName}
+        <Text fontWeight={"normal"}>{userName}</Text>
       </Th>
       <Th>
-        {blocked.toString()}
+        <Text fontWeight={"normal"}>{blocked.toString()}</Text>
       </Th>
     </Tr>
   );

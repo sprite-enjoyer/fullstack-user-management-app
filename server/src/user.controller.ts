@@ -9,15 +9,15 @@ import {
   ModifyManyUsersRequestBodyType
 } from "./user.controller.types.js";
 
-export const register = async (req: Request<any, any, UserCredentials>, res: Response, next: NextFunction) => {
-  if (!req.body.userName || !req.body.password) return res.status(400).json({ message: "necessary arguments not provided" });
+export const register = async (req: Request<any, any, UserCredentials>, res: Response) => {
+  if (!req.body.userName || !req.body.password) return res.status(400).json({ message: "necessary arguments not provided", taken: false });
   const user = await prisma.user.findFirst({ where: { userName: req.body.userName } });
-  if (user) return res.status(409).json({ message: "username is taken" });
+  if (user) return res.status(409).json({ message: "username is taken", taken: true });
   res.locals.userName = req.body.userName;
   const salt = await genSalt(10);
   const passwordHash = await hash(req.body.password, salt);
   await prisma.user.create({ data: { userName: req.body.userName, password: passwordHash } });
-  next();
+  return res.status(200).json({ message: "success", taken: false });
 };
 
 export const sendJWT = async (req: Request, res: Response) => {
@@ -109,4 +109,8 @@ export const getAllUsers = async (req: Request, res: Response) => {
     const users = result.map(user => { return { userName: user.userName, blocked: user.blocked } });
     return res.status(200).json({ message: "success", users: users });
   }
+}
+
+export const signOut = (req: Request, res: Response) => {
+  res.clearCookie("jwt").status(200).json({ message: "success", success: true });
 }

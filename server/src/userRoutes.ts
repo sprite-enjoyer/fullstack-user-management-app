@@ -7,7 +7,8 @@ import {
   login,
   register,
   sendJWT,
-  shouldUserBeSignedOut
+  shouldUserBeSignedOut,
+  signOut
 } from "./user.controller.js";
 
 const userRouter = Router();
@@ -21,5 +22,6 @@ userRouter.patch("/blockMany", blockUsers, shouldUserBeSignedOut);
 
 userRouter.get("/allUsers", getAllUsers);
 userRouter.get("/checkUser", checkUser);
+userRouter.get("/signOut", signOut);
 
 export default userRouter;
