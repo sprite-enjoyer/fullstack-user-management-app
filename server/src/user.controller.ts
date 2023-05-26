@@ -58,7 +58,13 @@ export const shouldUserBeSignedOut = (
 ) => {
   const { userNames, jwtUserName } = res.locals;
   for (let userName of userNames) {
-    if (userName === jwtUserName) return res.clearCookie("jwt").status(200).json({ message: "success", signOut: true });
+    if (userName === jwtUserName) return res.clearCookie("jwt", {
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: true,
+      httpOnly: true,
+      sameSite: "none",
+      path: "/"
+    }).status(200).json({ message: "success", signOut: true });
   }
   return res.status(200).json({ message: "success", signOut: false });
 };
@@ -114,5 +120,11 @@ export const getAllUsers = async (req: Request, res: Response) => {
 }
 
 export const signOut = (req: Request, res: Response) => {
-  res.clearCookie("jwt").status(200).json({ message: "success", success: true });
+  res.clearCookie("jwt", {
+    maxAge: 24 * 60 * 60 * 1000,
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
+    path: "/"
+  }).status(200).json({ message: "success", success: true });
 }
