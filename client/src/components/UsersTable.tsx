@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const UsersTable = () => {
   const [users, dispatchUsers] = useReducer(usersReducer, { allUsers: [], selectedUsers: [] });
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUsers = async () => {
       const allUsers = await RestClient.getAllUsers() as unknown as User[];

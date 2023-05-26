@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://fullstack-user-management-app-x9gk.vercel.app/"],
+  origin: ["http://localhost:5173", "user-management-website008.netlify.app"],
   methods: ["GET", "POST", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
