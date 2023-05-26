@@ -35,8 +35,8 @@ export const sendJWT = async (req: Request, res: Response) => {
       secure: true,
       httpOnly: true,
       expires: date,
-      sameSite: "none",
-      domain: "user-management-website008.netlify.app",
+      sameSite: "strict",
+      domain: ".user-management-website008.netlify.",
       path: "/"
     }
   ).status(200).json({ message: "request completed successfully" });
