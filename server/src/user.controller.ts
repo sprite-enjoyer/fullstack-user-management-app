@@ -61,6 +61,14 @@ export const shouldUserBeSignedOut = (
   return res.status(200).json({ message: "success", signOut: false });
 };
 
+export const checkUser = (req: Request, res: Response) => {
+  const [passedJWT, jwtSecret] = [req.headers.cookie?.slice(4) as string, process.env.JWT_SECRET];
+  if (!jwtSecret) return res.status(400).json({ message: "jwt data not found", signOut: true });
+  if (!passedJWT) return res.status(440).json({ message: "You need to re-login", signOut: true });
+
+  return res.status(200).json({ message: "ok", signOut: false });
+}
+
 export const blockUsers = async (
   req: Request<any, any, ModifyManyUsersRequestBodyType>,
   res: Response,

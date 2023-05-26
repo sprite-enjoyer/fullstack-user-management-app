@@ -1,6 +1,7 @@
 import { Flex, Input, Button } from "@chakra-ui/react"
 import { useReducer } from "react";
 import RestClient from "../misc/RestClient";
+import { useNavigate } from "react-router-dom";
 
 type FormState = { userName: string; password: string; repeatPassword: string; }
 type Action = { type: string; payload: string };
@@ -19,8 +20,13 @@ const formReducer = (state: FormState, action: Action): FormState => {
 };
 
 const Register = () => {
-
   const [formState, dispatch] = useReducer(formReducer, { userName: "", password: "", repeatPassword: "" });
+  const navigate = useNavigate();
+
+  const handleButtonClick = async () => {
+    const { success } = await RestClient.register(formState);
+    if (success) navigate("/login");
+  };
 
   return (
     <Flex
@@ -58,7 +64,7 @@ const Register = () => {
           onChange={(e) => dispatch({ type: "setRepeatPassword", payload: e.target.value })}
           placeholder="repeat password"
         />
-        <Button onClick={() => RestClient.register(formState)}>
+        <Button onClick={handleButtonClick}>
           Register
         </Button>
       </Flex>

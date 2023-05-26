@@ -1,6 +1,7 @@
 import { Router } from "express"
 import {
   blockUsers,
+  checkUser,
   deleteUsers,
   getAllUsers,
   login,
@@ -19,5 +20,6 @@ userRouter.delete("/deleteMany", deleteUsers, shouldUserBeSignedOut);
 userRouter.patch("/blockMany", blockUsers, shouldUserBeSignedOut);
 
 userRouter.get("/allUsers", getAllUsers);
+userRouter.get("/checkUser", checkUser);
 
 export default userRouter;

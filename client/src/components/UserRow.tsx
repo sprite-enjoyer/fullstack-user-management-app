@@ -1,5 +1,5 @@
 import { Checkbox, Th, Tr } from "@chakra-ui/react"
-import { TableActions, UsersReducerAction } from "./UsersTable";
+import { TableActions, UsersReducerAction } from "../misc/usersReducer";
 
 export interface UserRowProps {
   userName: string,

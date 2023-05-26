@@ -1,6 +1,7 @@
 import { Input, Flex, Button } from "@chakra-ui/react";
 import RestClient from "../misc/RestClient";
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 type FormActionType = "setUserName" | "setPassword";
 type FormState = { userName: string, password: string };
@@ -15,8 +16,13 @@ const formReducer = (state: FormState, action: FormAction) => {
 }
 
 const LoginPage = () => {
-
   const [formState, dispatch] = useReducer(formReducer, { userName: "", password: "" });
+  const navigate = useNavigate();
+
+  const handleButtonClick = async () => {
+    const { success } = await RestClient.login(formState);
+    if (success) navigate("/usersTable");
+  };
 
   return (
     <Flex
@@ -52,7 +58,7 @@ const LoginPage = () => {
           size={"lg"}
           placeholder="Password"
         />
-        <Button onClick={() => RestClient.login(formState)}>
+        <Button onClick={handleButtonClick}>
           Login
         </Button>
       </Flex>

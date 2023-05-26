@@ -1,5 +1,5 @@
 import { Button, Checkbox, Spacer, Th, Thead, Tr, useBoolean, Text } from "@chakra-ui/react";
-import { TableActions, UsersReducerAction } from "./UsersTable"
+import { TableActions, UsersReducerAction } from "../misc/usersReducer";
 
 export interface TableHeadProps {
   dispatchUsers: React.Dispatch<UsersReducerAction>
