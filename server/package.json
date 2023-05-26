@@ -9,7 +9,9 @@
     "build": "tsc -w",
     "start": "tsc && node ./dist/index.js",
     "nodemon": "nodemon ./dist/index.js",
-    "dev": "npm run build && nodemon ./dist/index.js"
+    "dev": "npm run build && nodemon ./dist/index.js",
+    "deployBuild": "npm i && tsc",
+    "deployStart": "node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
