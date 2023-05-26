@@ -58,7 +58,7 @@ const Register = () => {
           onChange={(e) => dispatch({ type: "setRepeatPassword", payload: e.target.value })}
           placeholder="repeat password"
         />
-        <Button onClick={() => console.log(RestClient.register(formState))}>
+        <Button onClick={() => RestClient.register(formState)}>
           Register
         </Button>
       </Flex>

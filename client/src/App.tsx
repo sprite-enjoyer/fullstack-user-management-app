@@ -1,6 +1,7 @@
 import LoginPage from "./components/Login";
 import { Flex } from "@chakra-ui/react";
 import Register from "./components/Register";
+import UsersTable from "./components/UsersTable";
 
 const App = () => {
   return (
@@ -15,7 +16,9 @@ const App = () => {
       top={"0"}
       left={"0"}
     >
-      <Register />
+      <UsersTable />
+      {/* <Register /> */}
+      {/* <LoginPage /> */}
     </Flex>
   );
 };

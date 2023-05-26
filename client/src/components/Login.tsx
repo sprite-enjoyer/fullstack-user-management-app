@@ -52,7 +52,7 @@ const LoginPage = () => {
           size={"lg"}
           placeholder="Password"
         />
-        <Button onClick={() => console.log(RestClient.register(formState))}>
+        <Button onClick={() => RestClient.login(formState)}>
           Login
         </Button>
       </Flex>

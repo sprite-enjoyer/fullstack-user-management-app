@@ -11,12 +11,12 @@ import {
 
 const userRouter = Router();
 
-userRouter.post("/register", register, sendJWT);
+userRouter.post("/register", register);
 userRouter.post("/login", login, sendJWT);
 
-userRouter.delete("deleteMany", deleteUsers, shouldUserBeSignedOut);
+userRouter.delete("/deleteMany", deleteUsers, shouldUserBeSignedOut);
 
-userRouter.patch("blockMany", blockUsers, shouldUserBeSignedOut);
+userRouter.patch("/blockMany", blockUsers, shouldUserBeSignedOut);
 
 userRouter.get("/allUsers", getAllUsers);
 

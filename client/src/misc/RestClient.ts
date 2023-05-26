@@ -19,6 +19,7 @@ export default class RestClient {
   static async login(credentials: UserCredentials) {
     const response = await fetch(`${RestClient.URL}/users/login`, {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json", },
       body: JSON.stringify(credentials),
     });
@@ -42,8 +43,9 @@ export default class RestClient {
   static async deleteManyUsers(users: string[]) {
     const response = await fetch(`${RestClient.URL}/users/deleteMany`, {
       method: "DELETE",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ users: users })
+      body: JSON.stringify({ userNames: users })
     });
 
     const json = await response.json();
@@ -52,10 +54,12 @@ export default class RestClient {
   }
 
   static async blockManyUsers(users: string[], block: boolean) {
-    const response = await fetch(`${RestClient.URL}/users/deleteMany`, {
+    const response = await fetch(`${RestClient.URL}/users/blockMany`, {
       method: "PATCH",
+      credentials: "include",
+
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ users: users, block: block })
+      body: JSON.stringify({ userNames: users, block: block })
     });
 
     const json = await response.json();

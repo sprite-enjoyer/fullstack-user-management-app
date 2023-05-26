@@ -66,15 +66,18 @@ export const blockUsers = async (
   res: Response,
   next: NextFunction
 ) => {
-  const [passedJWT, jwtSecret] = [req.headers.jwt as string, process.env.JWT_SECRET];
+  const [block, userNames] = [req.body.block, req.body.userNames];
+  const [passedJWT, jwtSecret] = [req.headers.cookie?.slice(4) as string, process.env.JWT_SECRET];
   if (!passedJWT || !jwtSecret) return res.status(400).json({ message: "jwt data not found", signOut: false });
   const { userName } = jwt.decode(passedJWT) as { userName: string, blocked: boolean, iat: number };
-  [res.locals.jwtUserName, res.locals.userNames] = [userName, [...req.body.userNames]];
-  for (let userName of req.body.userNames) prisma.user.update({
+  [res.locals.jwtUserName, res.locals.userNames] = [userName, [...userNames]];
+
+  for (let userName of req.body.userNames) await prisma.user.update({
     where: { userName: userName },
-    data: { blocked: req.body.block },
+    data: { blocked: block },
   });
-  next();
+  if (!block) return res.status(200).json({ message: "success", signOut: false });
+  else next();
 }
 
 export const deleteUsers = async (
@@ -82,11 +85,12 @@ export const deleteUsers = async (
   res: Response,
   next: NextFunction
 ) => {
-  const [passedJWT, jwtSecret] = [req.headers.jwt as string, process.env.JWT_SECRET];
+  const [passedJWT, jwtSecret] = [req.headers.cookie?.slice(4) as string, process.env.JWT_SECRET];
   if (!passedJWT || !jwtSecret) return res.status(400).json({ message: "jwt data not found", signOut: false });
   const { userName } = jwt.decode(passedJWT) as { userName: string, blocked: boolean, iat: number };
+
   [res.locals.jwtUserName, res.locals.userNames] = [userName, [...req.body.userNames]];
-  for (let userName of req.body.userNames) prisma.user.delete({ where: { userName: userName } });
+  for (let userName of req.body.userNames) await prisma.user.delete({ where: { userName: userName } });
   next();
 }
 
