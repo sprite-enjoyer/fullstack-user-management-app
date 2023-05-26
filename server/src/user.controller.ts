@@ -35,7 +35,6 @@ export const sendJWT = async (req: Request, res: Response) => {
       secure: true,
       httpOnly: true,
       expires: date,
-      sameSite: "strict",
       path: "/"
     }
   ).status(200).json({ message: "request completed successfully" });
