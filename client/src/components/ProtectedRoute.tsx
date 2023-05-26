@@ -8,7 +8,7 @@ export interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ Child }: ProtectedRouteProps) => {
   const [signOut, setSignOut] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkUser = async () => await RestClient.checkUser().then((res: boolean) => setSignOut(res));
